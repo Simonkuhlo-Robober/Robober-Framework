@@ -1,10 +1,9 @@
 from .logging.log_message_factory import LogMessageFactory
 from .logging.sources import LogMessageSource
-
+from .plugin import Plugin
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
     from .environment import Environment
-    from .plugin import Plugin
     from .plugin_request import PluginRequest
 
 class HostPlugin(Plugin):
@@ -68,7 +67,7 @@ class PluginHost:
     def get_loaded_plugins(self) -> list["Plugin"]:
         return self.loaded_plugins.copy()
 
-    def get_plugin(self, plugin_request: PluginRequest) -> "Plugin":
+    def get_plugin(self, plugin_request: "PluginRequest") -> "Plugin":
         for plugin in self.loaded_plugins:
             if plugin.plugin_id == plugin_request.plugin_id:
                 return plugin

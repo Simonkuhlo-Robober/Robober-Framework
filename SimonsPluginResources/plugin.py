@@ -18,7 +18,7 @@ if TYPE_CHECKING:
 class Plugin:
     def __init__(self,
                 plugin_id:str,
-                environment:Environment,
+                environment:"Environment",
                 name:str = "Not set",
                 description:str = "Not set",
                 version:int = 0,
