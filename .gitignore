@@ -1,0 +1,6 @@
+*.pyc
+.env
+/.idea
+**/__pycache__/
+/build
+/SimonsPluginResources.egg-info
