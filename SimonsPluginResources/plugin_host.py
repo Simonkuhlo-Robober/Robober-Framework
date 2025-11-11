@@ -26,7 +26,7 @@ class HostPlugin(Plugin):
 
 class PluginHost:
     def __init__(self, environment: "Environment"):
-        self.version: int = 1
+        self.version: int = 2
         self.environment: "Environment" = environment
         self.loaded_plugins: list[Plugin] = []
         logging_source: LogMessageSource = LogMessageSource("[Plugin Host]", "Core/PluginHost")

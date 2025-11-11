@@ -1,3 +1,4 @@
+from SimonsPluginResources.settings.scopes import PluginScope
 from SimonsPluginResources.settings.setting import Setting
 
 
@@ -12,7 +13,7 @@ class SettingFilter:
                 returned_list.append(setting)
         return returned_list
 
-class SettingPathFilter:
+class SettingPathFilter(SettingFilter):
     def __init__(self, path: str):
         self.path:str = path
 
@@ -21,11 +22,20 @@ class SettingPathFilter:
             return True
         return False
 
-class SettingCategoryFilter:
+class SettingCategoryFilter(SettingFilter):
     def __init__(self, category: str):
         self.category: str = category
 
     def filter(self, setting: Setting) -> bool:
         if setting.category == self.category:
+            return True
+        return False
+
+class SettingScopeFilter(SettingFilter):
+    def __init__(self, scope: PluginScope):
+        self.scope: PluginScope = scope
+
+    def filter(self, setting: Setting) -> bool:
+        if str(setting.scope) == str(self.scope):
             return True
         return False
