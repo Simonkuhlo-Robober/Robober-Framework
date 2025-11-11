@@ -1,74 +1,56 @@
-class TypeFilter:
-    def __init__(self):
-        self.type_name:str
+from SimonsPluginResources.settings.scopes import Scope
+from SimonsPluginResources.settings.setting import Setting
 
-    def from_string(self, value:str):
-        return value
 
-    def to_string(self, value) -> str:
-        pass
-
-    def check(self, value:str) -> bool:
-        if value:
-            return True
+class SettingFilter:
+    def filter(self, setting: Setting) -> bool:
         return True
 
-class TypeFilterString(TypeFilter):
-    def __init__(self):
-        super().__init__()
-        self.type_name = "String"
+    def filter_ist(self, setting_list:list[Setting]) -> list[Setting]:
+        returned_list: list[Setting] = []
+        for setting in setting_list:
+            if self.filter(setting):
+                returned_list.append(setting)
+        return returned_list
 
-    def from_string(self, value:str) -> str:
-        return value
+class SettingPathFilter(SettingFilter):
+    def __init__(self, path: str):
+        self.path:str = path
 
-    def to_string(self, value:str) -> str:
-        return str(value)
-
-    def check(self, value:str) -> bool:
-        return True
-
-class TypeFilterBoolean(TypeFilter):
-    def __init__(self):
-        super().__init__()
-        self.type_name = "Boolean"
-
-    def from_string(self, value:str) -> bool:
-        match value:
-            case "true":
-                return True
-            case "false":
-                return False
-        return None
-
-    def to_string(self, value:bool) -> str:
-        return str(value)
-
-    def check(self, value:str) -> bool:
-        if value in ["true", "false"]:
+    def filter(self, setting: Setting) -> bool:
+        if setting.get_path() == self.path:
             return True
         return False
 
-class TypeFilterInt(TypeFilter):
-    def __init__(self):
-        super().__init__()
-        self.type_name = "Integer"
+class SettingCategoryFilter(SettingFilter):
+    def __init__(self, category: str):
+        self.category: str = category
 
-    def from_string(self, value:str) -> int:
-        return int(value)
+    def filter(self, setting: Setting) -> bool:
+        if setting.category == self.category:
+            return True
+        return False
 
-    def to_string(self, value:int) -> str:
-        return str(value)
+class SettingScopeFilter(SettingFilter):
+    def __init__(self, scope: Scope):
+        self.scope: Scope = scope
 
-    def check(self, value:str) -> bool:
-        try:
-            int(value)
-        except Exception:
-            return False
+    def filter(self, setting: Setting) -> bool:
+        if str(setting.scope) == str(self.scope):
+            return True
+        return False
+
+class SettingFilterCollection(SettingFilter):
+    def __init__(self, filters:list[SettingFilter | None] = []):
+        self.filters = filters
+
+    def add_filter(self, new_filter: SettingFilter) -> None:
+        self.filters.append(new_filter)
+
+    def filter(self, setting: Setting) -> bool:
+        if not self.filters:
+            return True
+        for individual_filter in self.filters:
+            if not individual_filter.filter(setting):
+                return False
         return True
-
-class Filters:
-    STRING = TypeFilterString()
-    INT = TypeFilterInt()
-    BOOL = TypeFilterBoolean()
-
-filters = Filters()
