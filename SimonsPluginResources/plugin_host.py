@@ -1,5 +1,5 @@
-from .logging.log_message_factory import LogMessageFactory
-from .logging.sources import LogMessageSource
+from .custom_logging.log_message_factory import LogMessageFactory
+from .custom_logging.sources import LogMessageSource
 from .plugin import Plugin
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:

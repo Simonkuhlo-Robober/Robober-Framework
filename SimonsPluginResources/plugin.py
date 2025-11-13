@@ -2,11 +2,11 @@ import asyncio
 import os
 import sys
 from typing import final, Type, TYPE_CHECKING
-from .logging.log_message_factory import LogMessageFactory
-from .logging.sources import PluginLogMessageSource
+from .custom_logging.log_message_factory import LogMessageFactory
+from .custom_logging.sources import PluginLogMessageSource
 from .plugin_signal import Signal
 from .plugin_status import Status
-from .settings.setting import Setting
+from .settings import Setting
 if TYPE_CHECKING:
     from .webinterface_extension import WebinterfaceExtension
     from .plugin_extension import PluginExtension
