@@ -11,13 +11,13 @@ class SettingsManager:
     def __init__(self, storage: SettingsStorage):
         self.storage = storage
 
-    def get_list(self, used_filter: SettingFilter = None):
+    def get_list(self, used_filter: SettingFilter = None) -> Optional[list[Setting]]:
         return self.storage.get_list(used_filter)
 
     def get_setting(self, path: str) -> Optional[Setting]:
         return self.storage.get(path)
 
-    def get_value(self, path: str):
+    def get_value(self, path: str) -> Optional[str]:
         setting = self.storage.get(path)
         if setting is None:
             return None
