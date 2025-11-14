@@ -5,6 +5,8 @@ class Setting(BaseModel):
     rel_path: str
     default_value: str | None
     current_value: str | None = None
+    description: str | None = None
+    comment: str | None = None
     scope: Scope = ScopeGlobal()
 
     @property
