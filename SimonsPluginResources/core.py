@@ -1,17 +1,19 @@
 from typing import TYPE_CHECKING
 from threading import Thread
-from .logging.logger import Logger
+from .custom_logging.logger import Logger
 from .environment import Environment
 from .plugin_host import PluginHost
 from .reelbot import ReelBot
-from .settings import SettingsManager
+from .settings import SimpleSettingsManager
 if TYPE_CHECKING:
-    from .settings.setting import Setting
+    from .settings import Setting
 
 
 class CoreApp:
     def __init__(self, token: str, initial_settings:list["Setting"] | None = None):
-        self.settings = SettingsManager(initial_settings)
+        self.settings = SimpleSettingsManager()
+        for setting in initial_settings:
+            self.settings.import_setting(setting)
         self.logger = Logger()
         self.bot = ReelBot(self.logger, self.settings)
         self.bot.signal_ready.connect(self.on_bot_ready)
