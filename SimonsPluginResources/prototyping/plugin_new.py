@@ -1,9 +1,12 @@
 from typing import Optional
 
+from SimonsPluginResources.custom_logging.log_message_factory import LogMessageFactory
 from SimonsPluginResources.environment import Environment
 from SimonsPluginResources.plugin_request import PluginRequest
+from SimonsPluginResources.plugin_signal import Signal
+from SimonsPluginResources.plugin_status import Status
 from SimonsPluginResources.settings import Setting
-
+from SimonsPluginResources.plugin_extension import PluginExtension
 
 class PluginMeta:
     def __init__(self,
@@ -30,6 +33,14 @@ class Plugin:
                  ):
         self.environment = environment
         self.metadata = metadata
+
+        self.plugin_links: dict[str, "Plugin"] = {}
+        self.loaded_extensions: list["PluginExtension"] = []
+        self.logging = LogMessageFactory(environment.logger)
+
+        self.status: "Status" = Status.NOT_STARTED
+        self.started: "Signal" = Signal()
+        self.stopped: "Signal" = Signal()
 
     def start(self) -> None:
         pass
