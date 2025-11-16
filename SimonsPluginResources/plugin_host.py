@@ -3,7 +3,7 @@ from .custom_logging.sources import LogMessageSource
 from .plugin import Plugin
 from typing import TYPE_CHECKING
 if TYPE_CHECKING:
-    from .environment import Environment
+    from SimonsPluginResources.environment import Environment
     from .plugin_request import PluginRequest
 
 class HostPlugin(Plugin):

@@ -10,7 +10,7 @@ from .settings import Setting
 if TYPE_CHECKING:
     from .webinterface_extension import WebinterfaceExtension
     from .plugin_extension import PluginExtension
-    from .environment import Environment
+    from SimonsPluginResources.environment import Environment
     from .plugin_cog import PluginCog
     from .plugin_request import PluginRequest
 
