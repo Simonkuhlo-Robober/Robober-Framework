@@ -13,6 +13,6 @@ class LogMessageSource:
 class PluginLogMessageSource(LogMessageSource):
     def __init__(self, plugin: "Plugin"):
         super().__init__(
-            label=plugin.name,
+            label=f"[{plugin.name}]",
             path=f"Plugins/{plugin.plugin_id}"
         )

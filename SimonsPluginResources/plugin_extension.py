@@ -7,12 +7,17 @@ if TYPE_CHECKING:
 
 class PluginExtension:
     def __init__(self, parent_plugin: "Plugin" = None) -> None:
-        self.parent_plugin = parent_plugin
+        self._parent_plugin = parent_plugin
         self.plugin_started: Signal = Signal()
         self.plugin_stopped: Signal = Signal()
         self.plugin_changed: Signal = Signal()
 
-    def set_parent_plugin(self, plugin: "Plugin") -> None:
+    @property
+    def parent_plugin(self) -> "Plugin":
+        return self._parent_plugin
+
+    @parent_plugin.setter
+    def parent_plugin(self, plugin: "Plugin") -> None:
         if self.parent_plugin:
             self.parent_plugin.started.disconnect(self.on_plugin_start)
             self.parent_plugin.stopped.disconnect(self.on_plugin_stop)
