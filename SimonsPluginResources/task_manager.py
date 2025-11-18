@@ -33,7 +33,8 @@ class AsyncTaskManager:
                 self.unnamed_task_index += 1
             if task_wrapper.name in self.running_tasks.keys():
                 raise Exception("Task names must be unique!")
-            task_wrapper.task = asyncio.create_task(task_wrapper.target)
+            coro = task_wrapper.target(*task_wrapper.args, **task_wrapper.kwargs)
+            task_wrapper.task = asyncio.create_task(coro)
             self.running_tasks[task_wrapper.name] = task_wrapper
 
             def _on_done(wrapper: AsyncTask):
