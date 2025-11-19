@@ -7,6 +7,7 @@ class Setting(BaseModel):
     current_value: str | None = None
     description: str | None = None
     comment: str | None = None
+    category: str | None = None
     scope: Scope = ScopeGlobal()
 
     @property
