@@ -3,7 +3,6 @@ from inspect import signature, iscoroutinefunction
 from typing import Callable, get_type_hints, Any
 
 class Signal:
-
     def __init__(self, **arg_types: type):
         self.arg_types = arg_types
         self.connected_handlers: list[Callable[..., Any]] = []
